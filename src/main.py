@@ -18,4 +18,7 @@ for name, query in queries.items():
     try:
         g.run(query)
     except ClientError as e:
-        print("Index '{}' allready exists. Skip.".format(name))
+        if "index already exists" in e.message:
+            print("Index '{}' allready exists. Skip.".format(name))
+        else:
+            raise e
