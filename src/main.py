@@ -1,3 +1,7 @@
+import os
+from py2neo import Graph
+from py2neo.database import ClientError
+
 queries = {}
 
 queries[
@@ -11,14 +15,19 @@ queries[
 ] = 'CALL db.index.fulltext.createNodeIndex("AuthorFullTextIndex",["Author"],["first", "middle","last"])'
 queries[
     "EntityFullTextIndex"
-] = 'CALL db.index.fulltext.createNodeIndex("EntityFullTextIndex",["Entity"],["name"])'
-g = Graph()
-
-log = None
+] = 'CALL db.index.fulltext.createNodeIndex("EntityFullTextIndex",["Entity"],["name","dummycol"])'
+neo4j_host = os.getenv("GC_NEO4J_URL", None)
+neo4j_pw = os.getenv("GC_NEO4J_PASSWORD", None)
+neo4j_user = os.getenv("GC_NEO4J_USER", None)
+print("Connect to '{}'@'{}'".format(neo4j_user, neo4j_host))
+g = Graph(neo4j_host, user=neo4j_user, password=neo4j_pw)
 
 for name, query in queries.items():
-    log.info("Create fulltext index '{}'".format(name))
+    print("Create fulltext index '{}'".format(name))
     try:
         g.run(query)
-    except:
-        pass
+    except ClientError as e:
+        if "index already exists" in e.message:
+            print("Index '{}' allready exists. Skip.".format(name))
+        else:
+            raise e
