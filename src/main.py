@@ -16,6 +16,9 @@ queries[
 queries[
     "EntityFullTextIndex"
 ] = 'CALL db.index.fulltext.createNodeIndex("EntityFullTextIndex",["Entity"],["name","dummycol"])'
+queries[
+    "GeneFunctionsFullTextIndex"
+] = 'CALL db.index.fulltext.createNodeIndex("GeneFunctionsFullTextIndex",["GOTerm"],["name"])'
 neo4j_host = os.getenv("GC_NEO4J_URL", None)
 neo4j_pw = os.getenv("GC_NEO4J_PASSWORD", None)
 neo4j_user = os.getenv("GC_NEO4J_USER", None)
