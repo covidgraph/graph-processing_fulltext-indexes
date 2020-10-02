@@ -1,6 +1,6 @@
 import os
 from py2neo import Graph
-from py2neo.database import ClientError
+from py2neo.database.work import ClientError
 
 queries = {}
 
