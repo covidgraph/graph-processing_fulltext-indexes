@@ -19,11 +19,10 @@ queries[
 queries[
     "GeneFunctionsFullTextIndex"
 ] = 'CALL db.index.fulltext.createNodeIndex("GeneFunctionsFullTextIndex",["GOTerm"],["name"])'
-neo4j_host = os.getenv("GC_NEO4J_URL", None)
-neo4j_pw = os.getenv("GC_NEO4J_PASSWORD", None)
-neo4j_user = os.getenv("GC_NEO4J_USER", None)
-print("Connect to '{}'@'{}'".format(neo4j_user, neo4j_host))
-g = Graph(neo4j_host, user=neo4j_user, password=neo4j_pw)
+
+NEO4J_CONFIG_STRING = os.getenv("NEO4J")
+NEO4J_CONFIG_DICT = json.loads(NEO4J_CONFIG_STRING)
+graph = Graph(**NEO4J_CONFIG_DICT)
 
 for name, query in queries.items():
     print("Create fulltext index '{}'".format(name))
