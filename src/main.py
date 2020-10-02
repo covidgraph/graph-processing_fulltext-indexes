@@ -23,7 +23,7 @@ queries[
 
 NEO4J_CONFIG_STRING = os.getenv("NEO4J")
 NEO4J_CONFIG_DICT = json.loads(NEO4J_CONFIG_STRING)
-graph = Graph(**NEO4J_CONFIG_DICT)
+g = Graph(**NEO4J_CONFIG_DICT)
 
 for name, query in queries.items():
     print("Create fulltext index '{}'".format(name))
