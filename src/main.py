@@ -20,6 +20,9 @@ queries[
 queries[
     "GeneFunctionsFullTextIndex"
 ] = 'CALL db.index.fulltext.createNodeIndex("GeneFunctionsFullTextIndex",["GOTerm"],["name"])'
+queries[
+    "PatentsFulltextIndex"
+] = 'Call db.index.fulltext.createNodeIndex("PatentsFulltextIndex",["PatentTitle","PatentDescription","PatentAbstract","PatentClaim"],["text"])'
 
 NEO4J_CONFIG_STRING = os.getenv("NEO4J")
 NEO4J_CONFIG_DICT = json.loads(NEO4J_CONFIG_STRING)
